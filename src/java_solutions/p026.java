@@ -16,14 +16,14 @@ public class p026 {
 	
 	public static void main(String[] args) {
 
-		mc = new MathContext(10000);
+		mc = new MathContext(10000);	// 10000 digit big decimals
 		
 		int ans = 0;
 		int biggest = 0;
 		
 		for(int i=2; i<D_MAX; i++){
 			if(isRecurring(i)){
-				System.out.println("(1/" + i + ") = " + getFraction(i).toString().substring(0, 100));
+				//System.out.println("(1/" + i + ") = " + getFraction(i).toString().substring(0, 100));
 				int recurring = getRecurring(getFraction(i)).length();
 				if(recurring > biggest){
 					biggest = recurring;
@@ -38,47 +38,40 @@ public class p026 {
 		System.out.println("The longest recurring cycle is " + biggest + " numbers long");
 	}
 	
+	/**
+	 * Takes a non-terminating big decimal and returns a String of the recurring cycle
+	 * 
+	 * @param num - non-terminating big decimal
+	 * @return the recurring cycle
+	 */
 	public static String getRecurring(BigDecimal num){
 		
 		String str = num.toString().substring(2);
 		String temp = "";
 		String recur;
-		
+
+		// Iterate through the entire decimal
 		for(int i=0; i<str.length(); i++){
-			
-			int loc = temp.indexOf(str.charAt(i));
+			int loc = temp.indexOf(str.charAt(i));	// Location of the current number in the temp string
+			// The current number could also be in the prefix. Check all locations of this num
 			while(loc != -1){
 				recur = temp.substring(loc);
-				//System.out.print("i = [" + i + "] --- Checking to see if " + recur + " == ");
-				//System.out.print(str.substring(i, i + recur.length()));
-				//System.out.println(" and " + str.substring(i + recur.length(), i + recur.length()*2) );
 				
 				// Check if it is recurring
-				//System.out.print("i = [" + i + "] --- Checking to see if " + recur + " == ");
-				int times = 4;
-				for(int j=1; j<=times; j++){
+				int cycles = 4;	// How many cycles to check
+				for(int j=1; j<=cycles; j++){
 					String next = str.substring(i + recur.length()*j, i + recur.length()*(j+1));
-					//System.out.print(next + " == ");
-					if(j==times){
-						//System.out.println("\nRecurring cycle is " + recur);
+					if(j==cycles){
 						return recur;
 					}
 					if(!recur.equals(next)){
-						//System.out.println();
-						j=times+1;
+						j=cycles+1;
 					}
 				}
-				/*if( recur.equals( str.substring(i, i + recur.length()) ) &&
-						recur.equals( str.substring(i + recur.length(), i + recur.length()*2) ) ){
-					System.out.println("Recurring cycle is " + recur);
-					return recur;
-				}*/
 				
 				loc = temp.indexOf(str.charAt(i), loc+1);
 			}
 			temp += str.charAt(i);
-			
-			
 		}
 		
 		return "";
