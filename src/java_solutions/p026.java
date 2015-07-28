@@ -16,13 +16,14 @@ public class p026 {
 	
 	public static void main(String[] args) {
 
-		mc = new MathContext(2000);
+		mc = new MathContext(10000);
 		
 		int ans = 0;
 		int biggest = 0;
 		
 		for(int i=2; i<D_MAX; i++){
 			if(isRecurring(i)){
+				System.out.println("(1/" + i + ") = " + getFraction(i).toString().substring(0, 100));
 				int recurring = getRecurring(getFraction(i)).length();
 				if(recurring > biggest){
 					biggest = recurring;
@@ -43,21 +44,37 @@ public class p026 {
 		String temp = "";
 		String recur;
 		
-		System.out.println("num = " + str);
-		
 		for(int i=0; i<str.length(); i++){
 			
 			int loc = temp.indexOf(str.charAt(i));
-			if(loc != -1){
+			while(loc != -1){
 				recur = temp.substring(loc);
 				//System.out.print("i = [" + i + "] --- Checking to see if " + recur + " == ");
 				//System.out.print(str.substring(i, i + recur.length()));
 				//System.out.println(" and " + str.substring(i + recur.length(), i + recur.length()*2) );
-				if( recur.equals( str.substring(i, i + recur.length()) ) &&
-						recur.equals( str.substring(i + recur.length(), i + recur.length()*2) ) ){
-					
-					return recur;
+				
+				// Check if it is recurring
+				//System.out.print("i = [" + i + "] --- Checking to see if " + recur + " == ");
+				int times = 4;
+				for(int j=1; j<=times; j++){
+					String next = str.substring(i + recur.length()*j, i + recur.length()*(j+1));
+					//System.out.print(next + " == ");
+					if(j==times){
+						//System.out.println("\nRecurring cycle is " + recur);
+						return recur;
+					}
+					if(!recur.equals(next)){
+						//System.out.println();
+						j=times+1;
+					}
 				}
+				/*if( recur.equals( str.substring(i, i + recur.length()) ) &&
+						recur.equals( str.substring(i + recur.length(), i + recur.length()*2) ) ){
+					System.out.println("Recurring cycle is " + recur);
+					return recur;
+				}*/
+				
+				loc = temp.indexOf(str.charAt(i), loc+1);
 			}
 			temp += str.charAt(i);
 			
