@@ -56,7 +56,8 @@ public class MyStopwatch {
 	
 	public void print(){
 		//System.out.println("Time duration(ms): " + diff());
-		System.out.println("Time duration(HH:mm:ss.SSS): " + diffFormatted());
+		System.out.println("Time duration(HH:mm:ss.SSS): " + diffFormatted() +
+							"\nTime duration(ms): " + diff());
 	}
 	
 }

@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import tools.MyStopwatch;
 
+// Gives right answer
 
 public class p011 {
 
@@ -28,7 +29,7 @@ public class p011 {
 				
 		System.out.println("The greatest product of four adjacent numbers " +
 				"in the same direction (up, down, left, right, or diagonally) " +
-				"in the 20×20 grid is " + max);
+				"in the 20ï¿½20 grid is " + max);
 		
 		sw.stop().print();
 		
